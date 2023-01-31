@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background: black;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15pt;
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button, input, textarea {
+    font-size: 16pt;
+    min-width: 140px;
+    padding: 3px 6px;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 6px;
+    margin-right: 6px;
+}
+
+#output {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3.25vw;
+    white-space: pre;
+    line-height: 1.15;
+    /* animation: animLineHeight 2s cubic-bezier(0.075, 0.82, 0.165, 1); */
+    transform-origin: top center;
+    transform: scale(1, 0.6);
+}
+
+/* Squares */
+span.ai {
+    color: rgb(64, 105, 158);
+}
+span.start {
+    color: rgb(63, 172, 82);
+}
+span.end {
+    color: rgb(212, 67, 67);
+}
+
+@keyframes animLineHeight {
+    from {
+        line-height: 1.5;
+    }
+}
+
+#pointer {
+    width: 128px;
+    height: 128px;
+    background-color: rgb(187, 187, 187);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+
+    transition: 0.1s transform ease;
+}
