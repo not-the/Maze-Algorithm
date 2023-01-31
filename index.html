@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze generator</title>
+
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #output {
+            font-size: 3.25vw;
+            white-space: pre;
+            line-height: 1.15;
+            /* animation: animLineHeight 2s cubic-bezier(0.075, 0.82, 0.165, 1); */
+            transform-origin: top center;
+            transform: scale(1, 0.6);
+        }
+
+        span.ai {
+            color: rgb(64, 105, 158);
+        }
+        span.start {
+            color: rgb(63, 172, 82);
+        }
+        span.end {
+            color: rgb(212, 67, 67);
+        }
+
+        @keyframes animLineHeight {
+            from {
+                line-height: 1.5;
+            }
+        }
+
+        #pointer {
+            width: 128px;
+            height: 128px;
+            background-color: rgb(187, 187, 187);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+
+            transition: 0.1s transform ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="output"></div>
+    </div>
+
+
+    <div id="pointer"></div>
+
+    <!-- JS -->
+    <script src="index.js"></script>
+</body>
+</html>
