@@ -23,9 +23,9 @@ button, input, textarea {
 
 #output {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 3.25vw;
+    font-size: clamp(14pt, 3.25vw, 2.8em);
     white-space: pre;
-    line-height: 1.15;
+    line-height: 1.1;
     /* animation: animLineHeight 2s cubic-bezier(0.075, 0.82, 0.165, 1); */
     transform-origin: top center;
     transform: scale(1, 0.6);
@@ -55,11 +55,11 @@ span.backed {
     }
 }
 
-#pointer {
-    width: 128px;
-    height: 128px;
-    background-color: rgb(187, 187, 187);
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+#more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
-    transition: 0.1s transform ease;
+    padding: 18px 0;
 }
