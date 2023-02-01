@@ -33,13 +33,20 @@ button, input, textarea {
 
 /* Squares */
 span.ai {
-    color: rgb(64, 105, 158);
+    color: rgb(81, 131, 197);
 }
 span.start {
     color: rgb(63, 172, 82);
 }
 span.end {
     color: rgb(212, 67, 67);
+}
+
+span.location {
+    color: rgb(194, 141, 255);
+}
+span.backed {
+    color: rgb(41, 63, 92);
 }
 
 @keyframes animLineHeight {

@@ -9,7 +9,10 @@ const wall = '█';
 const clear = ' ';
 const start = '<span class="start">█</span>';
 const end = '<span class="end">█</span>';
+
+const ai = '<span class="location">█</span>';
 const visited = '<span class="ai">█</span>';
+const backtracked = '<span class="backed">█</span>';
 
 const dirs = {
     0: [-2,  0], // N
@@ -182,6 +185,7 @@ function solve() {
                 solver[0] += dir[0];
                 solver[1] += dir[1];
     
+                if(board[solver[0]][solver[1]] == visited) board[solver[0]][solver[1]] = backtracked;
                 if(board[solver[0]][solver[1]] == clear) board[solver[0]][solver[1]] = visited;
             }
         } while(board[solver[0]][solver[1]] != end);
@@ -225,7 +229,7 @@ function solve() {
             side = dirsSingle[relativeFacing];
             if(board[solver[0] + side[0]][solver[1] + side[1]] != wall) {
                 facing = relativeFacing;
-                dir = dirsSingle[facing]; // Turn left
+                dir = dirsSingle[facing]; // Turn
                 moveForward();
                 return;
             }
@@ -241,7 +245,20 @@ function solve() {
             function moveForward() {
                 solver[0] += dir[0];
                 solver[1] += dir[1];
-    
+
+                // Solved path
+                var adjacents = [];
+                for(i in dirsSingle) {
+                    let d = dirsSingle[i];
+                    console.log(d);
+                    try {
+                        adjacents.push(board[solver[0] + d[0]][solver[1] + d[1]]);
+                    } catch (error) {
+                        adjacents.push('OoB'); // out of bounds
+                    }
+                }
+
+                if(board[solver[0]][solver[1]] == visited && !adjacents.includes(' ')) board[solver[0]][solver[1]] = backtracked;
                 if(board[solver[0]][solver[1]] == clear) board[solver[0]][solver[1]] = visited;
                 elOutput.innerHTML = toHTML(board);
             }
@@ -261,6 +278,7 @@ function solve() {
 /** 2D array to string */
 function toHTML(board) {
     let html = JSON.parse(JSON.stringify(board));
+    html[solver[0]][solver[1]] = ai;
     for(let i = 0; i < html.length; i++) {
         html[i] = html[i].join('');
     }
