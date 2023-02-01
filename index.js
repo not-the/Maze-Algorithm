@@ -184,8 +184,20 @@ function solve() {
             function moveForward() {
                 solver[0] += dir[0];
                 solver[1] += dir[1];
-    
-                if(board[solver[0]][solver[1]] == visited) board[solver[0]][solver[1]] = backtracked;
+
+                // Solved path
+                var adjacents = [];
+                for(i in dirsSingle) {
+                    let d = dirsSingle[i];
+                    console.log(d);
+                    try {
+                        adjacents.push(board[solver[0] + d[0]][solver[1] + d[1]]);
+                    } catch (error) {
+                        adjacents.push('OoB'); // out of bounds
+                    }
+                }
+
+                if(board[solver[0]][solver[1]] == visited && !adjacents.includes(' ')) board[solver[0]][solver[1]] = backtracked;
                 if(board[solver[0]][solver[1]] == clear) board[solver[0]][solver[1]] = visited;
             }
         } while(board[solver[0]][solver[1]] != end);
