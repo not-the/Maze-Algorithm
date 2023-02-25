@@ -1,3 +1,4 @@
+const body = document.querySelector('body');
 const elOutput = document.getElementById("output");
 const elOptions = {
     color: document.getElementById("color_option"),
@@ -5,14 +6,14 @@ const elOptions = {
 }
 const elPointer = document.getElementById("pointer");
 
-const wall = '█';
-const clear = ' ';
-const start = '<span class="start">█</span>';
-const end = '<span class="end">█</span>';
+const wall = '<div class="wall"></div>';
+const clear = '<div class="clear"></div>';
+const start = '<div class="start"></div>';
+const end = '<div class="end"></div>';
 
-const ai = '<span class="location">█</span>';
-const visited = '<span class="ai">█</span>';
-const backtracked = '<span class="backed">█</span>';
+const solverSquare = '<div class="solver"></div>';
+const visited = '<div class="visited"></div>';
+const backtracked = '<div class="backed"></div>';
 
 const dirs = {
     0: [-2,  0], // N
@@ -43,6 +44,12 @@ solver[1] = startPoint[1];
 var settings = {
     gen_speed: 0, // loop delay in ms
     solve_speed: 20,
+    portrait: false,
+}
+const settingCode = {
+    portrait: () => {
+        settings.portrait ? body.classList.add('portrait') : body.classList.remove('portrait');
+    }
 }
 
 /** Generate maze */
@@ -82,7 +89,7 @@ function generate(h=17, w=32) {
             board[carver[0]][carver[1]] = clear;
             board[carver[0] - dir[0] / 2][carver[1] - dir[1] / 2] = clear; // inbetween
 
-            // elOutput.innerHTML = toHTML(board);
+            // toHTML(board);
 
         }
     }
@@ -110,13 +117,13 @@ function generate(h=17, w=32) {
             board[carver[0]][carver[1]] = clear;
             board[carver[0] - dir[0] / 2][carver[1] - dir[1] / 2] = clear; // inbetween
     
-            elOutput.innerHTML = toHTML(board);
+            toHTML(board);
         }, 5);
     }
     
     console.log('Maze created');
     boardState = false;
-    elOutput.innerHTML = toHTML(board);
+    toHTML(board);
 
     // Reset
     carver[0] = startPoint[0];
@@ -197,7 +204,7 @@ function solve() {
                     }
                 }
 
-                if(board[solver[0]][solver[1]] == visited && !adjacents.includes(' ')) board[solver[0]][solver[1]] = backtracked;
+                if(board[solver[0]][solver[1]] == visited && !adjacents.includes(clear)) board[solver[0]][solver[1]] = backtracked;
                 if(board[solver[0]][solver[1]] == clear) board[solver[0]][solver[1]] = visited;
             }
         } while(board[solver[0]][solver[1]] != end);
@@ -270,9 +277,9 @@ function solve() {
                     }
                 }
 
-                if(board[solver[0]][solver[1]] == visited && !adjacents.includes(' ')) board[solver[0]][solver[1]] = backtracked;
+                if(board[solver[0]][solver[1]] == visited && !adjacents.includes(clear)) board[solver[0]][solver[1]] = backtracked;
                 if(board[solver[0]][solver[1]] == clear) board[solver[0]][solver[1]] = visited;
-                elOutput.innerHTML = toHTML(board);
+                toHTML(board);
             }
 
             max--;
@@ -282,19 +289,19 @@ function solve() {
 
     console.log('MAZE SOLVED', max);
     boardState = 'Solved';
-    elOutput.innerHTML = toHTML(board);
+    toHTML(board);
 }
 
 
 
 /** 2D array to string */
 function toHTML(board) {
-    let html = JSON.parse(JSON.stringify(board));
-    html[solver[0]][solver[1]] = ai;
-    for(let i = 0; i < html.length; i++) {
-        html[i] = html[i].join('');
+    let html = JSON.parse(JSON.stringify(board)); // Clone board
+    html[solver[0]][solver[1]] = solverSquare; // Highlight solver
+    for(let i = 0; i < html.length; i++) { 
+        html[i] = `<div class="row">${ html[i].join('')}</div>`; // Join rows
     }
-    return html.join('\n');
+    elOutput.innerHTML = html.join('\n');
 }
 
 
@@ -307,15 +314,18 @@ function sphNum(value, change=0, min=0, max=3) {
 }
 
 /** Sleep function (credit: the internet) */
-const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
+// const sleep = (milliseconds) => {
+//     return new Promise(resolve => setTimeout(resolve, milliseconds))
+// }
 
 
 document.querySelectorAll('input[data-setting]').forEach(element => {
     element.addEventListener('change', event => {
-        console.log(element.value);
-        settings[element.dataset.setting] = element.value;
+        // console.log(element.value);
+        let type = element.getAttribute("type");
+        settings[element.dataset.setting] = type == 'checkbox' ? element.checked : element.value;
+        let func = settingCode[element.dataset.setting];
+        if(func != undefined) func();
     })
 })
 

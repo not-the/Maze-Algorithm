@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze generator</title>
+    <title>Maze Algorithm</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
+        <h1>Maze Algorithm</h1>
+    </div>
+
+    <div class="center">
         <div id="output"></div>
     </div>
 
-    <div class="container" id="more">
+    <hr/>
+
+    <div id="more">
         <div>
             <button onclick="generate()">New maze</button>
             <button onclick="solve()">Solve maze</button>
@@ -25,6 +31,11 @@
             <label for="setting_gen_speed">
                 <b>Generator Speed (ms):</b><br/>
                 <input type="number" name="setting_gen_speed" id="setting_gen_speed" data-setting="gen_speed" value="0">
+            </label>
+            <br/><br/>
+            <label for="setting_gen_speed">
+                <b>Portrait mode:</b><br/>
+                <input type="checkbox" name="setting_portrait" id="setting_portrait" data-setting="portrait">
             </label>
         </div>
     </div>
